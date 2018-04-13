@@ -3,11 +3,20 @@ body {
   height: 600px;
 }
 
-.text-bold {
-  font: bold;
-  font-size: 20px;
+.border-radius-32 {
+  border-radius: 32px;
 }
 
-.border-radius-30 {
-  border-radius: 30px;
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-fill {
+  flex-grow: 1;
+}
+
+.use-button {
+  height: 25px;
+  width: 60px;
 }
