@@ -6,14 +6,10 @@ import VerticalList from "./view/VerticalList";
 import ColorAvatar from "./view/ColorAvatar";
 import Button from "./view/Button";
 import HorizontalList from "./view/HorizontalList";
-import UIkit from "uikit";
-import Icons from "uikit/dist/js/uikit-icons";
 import "uikit/dist/css/uikit.css";
 
-// loads the Icon plugin
-UIkit.use(Icons);
-
 const $ = require("jquery");
+const sha256 = require("js-sha256").sha256;
 
 var app = $("#app");
 
@@ -32,7 +28,7 @@ var accounts = [
 ];
 var accountVerticalList = new VerticalList([]);
 accounts.forEach(account => {
-  var avt = new ColorAvatar(account);
+  var avt = new ColorAvatar(sha256(account));
   var button = new Button("USE");
   var text = new Text(account);
 
