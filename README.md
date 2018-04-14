@@ -8,5 +8,5 @@ After that it is gonna broadcast that to other chrome extension user.
 
 Chrome extension user can receive the most updated information to join the Airdrop instantly.
 <div style="text-align:center">
-    <img src="resource/airhunt-arch.jpg" width="500">
+    <img src="resource/airhunt-arch.svg" width="500">
 </div>
