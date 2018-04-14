@@ -8,11 +8,11 @@ class ColorAvatar extends Widget {
     this.id = id;
     let option = {
       seed: id,
-      size: 8,
-      scale: 8
+      size: 6,
+      scale: 6
     };
     let icon = $(blockies.create(option));
-    icon.addClass("border-radius-32");
+    icon.addClass("border-radius-18");
 
     this.elem = icon;
   }
