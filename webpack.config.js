@@ -10,9 +10,20 @@ var webpack = require("webpack"),
 // load the secrets
 var alias = {};
 
-var secretsPath = path.join(__dirname, ("secrets." + env.NODE_ENV + ".js"));
+var secretsPath = path.join(__dirname, "secrets." + env.NODE_ENV + ".js");
 
-var fileExtensions = ["jpg", "jpeg", "png", "gif", "eot", "otf", "svg", "ttf", "woff", "woff2"];
+var fileExtensions = [
+  "jpg",
+  "jpeg",
+  "png",
+  "gif",
+  "eot",
+  "otf",
+  "svg",
+  "ttf",
+  "woff",
+  "woff2"
+];
 
 if (fileSystem.existsSync(secretsPath)) {
   alias["secrets"] = secretsPath;
@@ -33,13 +44,14 @@ var options = {
     filename: "[name].bundle.js"
   },
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.css$/,
-        loader: "style-loader!css-loader",
-        exclude: /node_modules/
+        loader: "style-loader!css-loader"
+        // exclude: /node_modules/
       },
       {
-        test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
+        test: new RegExp(".(" + fileExtensions.join("|") + ")$"),
         loader: "file-loader?name=[name].[ext]",
         exclude: /node_modules/
       },
@@ -60,17 +72,21 @@ var options = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env.NODE_ENV)
     }),
-    new CopyWebpackPlugin([{
-      from: "src/manifest.json",
-      transform: function (content, path) {
-        // generates the manifest file using the package.json informations
-        return Buffer.from(JSON.stringify({
-          description: process.env.npm_package_description,
-          version: process.env.npm_package_version,
-          ...JSON.parse(content.toString())
-        }))
+    new CopyWebpackPlugin([
+      {
+        from: "src/manifest.json",
+        transform: function(content, path) {
+          // generates the manifest file using the package.json informations
+          return Buffer.from(
+            JSON.stringify({
+              description: process.env.npm_package_description,
+              version: process.env.npm_package_version,
+              ...JSON.parse(content.toString())
+            })
+          );
+        }
       }
-    }]),
+    ]),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "popup.html"),
       filename: "popup.html",

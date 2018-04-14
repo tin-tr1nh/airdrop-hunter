@@ -5,15 +5,16 @@ const $ = require("jquery");
 class ColorAvatar extends Widget {
   constructor(id) {
     super();
-    this.addClass("border-radius-30");
     this.id = id;
     let option = {
       seed: id,
-      size: 10,
+      size: 6,
       scale: 6
     };
-    let icon = blockies.create(option);
-    this.elem = $(icon);
+    let icon = $(blockies.create(option));
+    icon.addClass("border-radius-18");
+
+    this.elem = icon;
   }
 }
 
