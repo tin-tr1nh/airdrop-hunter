@@ -16,9 +16,7 @@ class VerticalList extends Widget {
     super.render(where);
 
     this.items.forEach(item => {
-      let wrapper = $("<div></div>");
-      item.render(wrapper);
-      wrapper.appendTo(this.elem);
+      item.render(this.elem);
     });
   }
 }

@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   width: 346px;
   height: 600px;
@@ -9,13 +13,42 @@ body {
 
 .flex-row {
   display: flex;
+  align-items: flex-start;
   flex-direction: row;
-}
-
-.flex-fill {
-  flex-grow: 1;
 }
 
 .use-button {
   width: 60px;
+}
+
+.flex-basic-0 {
+  flex-basis: 0;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.flex-grow-3 {
+  flex-grow: 3;
+}
+
+.margin-0 {
+  margin: 0;
+}
+
+.margin-10 {
+  margin: 10px;
+}
+
+.break-word {
+  word-wrap: break-word;
+}
+
+.width-100 {
+  width: 100px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
