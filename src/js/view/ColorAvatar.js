@@ -13,8 +13,7 @@ class ColorAvatar extends Widget {
     };
     let icon = $(blockies.create(option));
     icon.addClass("border-radius-18");
-
-    this.elem = icon;
+    this.elem = $("<div></div>").append(icon);
   }
 }
 
