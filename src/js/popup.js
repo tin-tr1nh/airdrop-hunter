@@ -1,6 +1,5 @@
 import "../css/popup.css";
 
-import hello from "./popup/example";
 import Text from "./view/Text";
 import VerticalList from "./view/VerticalList";
 import ColorAvatar from "./view/ColorAvatar";
@@ -15,19 +14,32 @@ const sha256 = require("js-sha256").sha256;
 var app = $("#app");
 
 var accountVerticalList = new VerticalList([]);
-Model.loadAccounts().forEach(account => {
-  var avt = new ColorAvatar(sha256(account.email));
-  var useButton = new Button("USE", account);
-  var emailText = new Text(account.email);
+Model.loadAccounts().then(function (res) {
+  res.forEach(account => {
+    var avt = new ColorAvatar(sha256(account.email));
+    var useButton = new Button("USE");
+    var emailText = new Text(account.email);
 
-  avt.addClass("flex-basic-0 flex-grow-1 cursor-pointer");
-  emailText.addClass("flex-basic-0 flex-grow-3 margin-0 break-word width-100");
-  useButton.addClass("use-button flex-basic-0 flex-grow-1");
+    avt.addClass("flex-basic-0 flex-grow-1 cursor-pointer");
+    emailText.addClass("flex-basic-0 flex-grow-3 margin-0 break-word width-100");
+    useButton.addClass("use-button flex-basic-0 flex-grow-1");
+    useButton.addClickListener((function (account) {
+      return function () {
+        chrome.tabs.query({
+          currentWindow: true,
+          active: true
+        }, function (tabs) {
+          var activeTab = tabs[0];
+          chrome.tabs.sendMessage(activeTab.id, account, function (res) {});
+        });
+      }
+    })(account));
 
-  var item = new HorizontalList([avt, emailText, useButton]);
-  item.addClass("margin-10");
+    var item = new HorizontalList([avt, emailText, useButton]);
+    item.addClass("uk-card uk-card-default uk-card-hover uk-card-body uk-padding-small margin-10");
 
-  accountVerticalList.addItem(item);
+    accountVerticalList.addItem(item);
+  });
+
+  accountVerticalList.render(app);
 });
-
-accountVerticalList.render(app);

@@ -15,12 +15,10 @@ import Model from "./model";
   function fillInput(xPathObj, accountInfo) {
     for (var key in xPathObj) {
       if (xPathObj.hasOwnProperty(key)) {
-        console.log(xPathObj[key], accountInfo[key]);
         if (accountInfo[key] == undefined) {
           continue;
         }
         $(xPathObj[key]).val(accountInfo[key]);
-        console.log("Filled");
       }
     }
   }

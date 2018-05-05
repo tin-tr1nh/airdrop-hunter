@@ -7,7 +7,7 @@ class VerticalList extends Widget {
     super();
     this.elem = $("<div></div>");
     this.elem.addClass(
-      "uk-card uk-card-default uk-card-hover uk-card-body uk-padding-small flex-row"
+      "flex-row"
     );
     this.items = items;
   }
