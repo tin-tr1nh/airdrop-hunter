@@ -14,12 +14,20 @@ const $ = require("jquery");
 const sha256 = require("js-sha256").sha256;
 
 var app = $("#app");
+var airdropApp = $("#airdrop-list");
 
 var octopus = {
     updateShowView: function () {
         Model.loadAccounts().then(function (res) {
             console.log("UpdateShowView", res);
             showView.init(res);
+        });
+    },
+
+    updateAirdropView: function () {
+        Model.loadAccounts().then(function (res) {
+            console.log("UpdateShowView", res);
+            airdropView.init(res);
         });
     }
 };
@@ -128,5 +136,46 @@ var editView = {
     }
 };
 
+var airdropView = {
+    init: function (airdrops) {
+        this.airdrops = airdrops;
+        this.airdropListView = new VerticalList([]);
+        this.fetchButton = new Button("Fetch");
+        this.render();
+    },
+
+    handleOnClickFetch: function () {
+        console.log("Fetch new airdrops");
+    },
+    handleOnClickJoin: function () {
+        console.log("Join airdrop");
+    },
+
+    render: function () {
+        this.airdrops.forEach(airdrop => {
+            var avt = new ColorAvatar(sha256(airdrop.email));
+            var joinButton = new Button("JOIN");
+            var urlText = new Text(airdrop.email);
+
+            avt.addClass("flex-basic-0 flex-grow-1 cursor-pointer");
+            urlText.addClass("flex-basic-0 flex-grow-3 margin-0 break-word width-100");
+            joinButton.addClass("use-button flex-basic-0 flex-grow-1 margin-2");
+
+            var item = new HorizontalList([avt, urlText, joinButton]);
+            item.addClass("uk-card uk-card-default uk-card-hover uk-card-body uk-padding-small margin-10");
+
+            joinButton.addClickListener(this.handleOnClickJoin.bind(this));
+
+            this.airdropListView.addItem(item);
+        });
+
+        this.fetchButton.addClickListener(this.handleOnClickFetch);
+        this.airdropListView.addItem(this.fetchButton);
+
+        this.airdropListView.render(airdropApp);
+    },
+}
+
 
 octopus.updateShowView();
+octopus.updateAirdropView();
