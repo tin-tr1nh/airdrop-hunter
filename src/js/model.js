@@ -44,13 +44,23 @@ var Model = {
     },
 
     loadAirdrops: function () {
-        return [{
-            url: "https://www.xdac.co/airdrop/",
-            twitter: "#ipt_fsqm_form_70_pinfo_6_value",
-            email: "#ipt_fsqm_form_70_pinfo_10_value",
-            eth: "#ipt_fsqm_form_70_pinfo_5_value",
-        }];
+        return new Promise(function (res, rej) {
+            chrome.storage.local.get(['airdrops'], function (result) {
+                // check is empty obj
+                if (Object.keys(result).length === 0 && result.constructor === Object) {
+                    res([]);
+                    return;
+                }
+                res(result["airdrops"]);
+            });
+        });
     },
+
+    setAirdrop: function (data) {
+        chrome.storage.local.set({
+            airdrops: data
+        });
+    }
 };
 
 export default Model;

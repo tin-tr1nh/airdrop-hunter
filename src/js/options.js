@@ -12,6 +12,9 @@ import Model from "./model";
 
 const $ = require("jquery");
 const sha256 = require("js-sha256").sha256;
+const Papa = require("papaparse");
+
+const airdropUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQbpY9YbEqtfODfXHcREXUdckB6FSOXK1D5D8LCGWW0R2CPvhD4IDnCFczzGL6Sh1w0sEzNfT3aYpMK/pub?gid=0&single=true&output=csv";
 
 var app = $("#app");
 var airdropApp = $("#airdrop-list");
@@ -25,8 +28,8 @@ var octopus = {
     },
 
     updateAirdropView: function () {
-        Model.loadAccounts().then(function (res) {
-            console.log("UpdateShowView", res);
+        Model.loadAirdrops().then(function (res) {
+            console.log("UpdateAirdropView", res);
             airdropView.init(res);
         });
     }
@@ -60,6 +63,8 @@ var showView = {
     },
 
     render: function () {
+        this.newButton.addClickListener(this.handleOnClickNew(Model.loadNewAccount()).bind(this));
+        this.accountsView.addItem(this.newButton);
 
         this.accounts.forEach(account => {
             var avt = new ColorAvatar(sha256(account.email));
@@ -81,14 +86,9 @@ var showView = {
             this.accountsView.addItem(item);
         });
 
-        this.newButton.addClickListener(this.handleOnClickNew(Model.loadNewAccount()).bind(this));
-        this.accountsView.addItem(this.newButton);
-
         this.accountsView.render(app);
     },
-    hide: function () {
-        this.accountsView.hide();
-    },
+
     empty: function () {
         this.accountsView.empty();
     }
@@ -145,17 +145,39 @@ var airdropView = {
     },
 
     handleOnClickFetch: function () {
+        this.empty();
+
         console.log("Fetch new airdrops");
+        Papa.parse(airdropUrl, {
+            download: true,
+            header: true,
+            complete: function (result) {
+                console.log("Finish fetch");
+                console.log(result);
+                Model.setAirdrop(result.data);
+                octopus.updateAirdropView();
+            },
+            error: function (err, file, inputElem, reason) {
+                alert("Fetch data got error. Inform admin!!!");
+            },
+        })
     },
-    handleOnClickJoin: function () {
-        console.log("Join airdrop");
+
+    handleOnClickJoin: function (url) {
+        return function () {
+            console.log("Join airdrop");
+            window.open(url, '_blank');
+        }
     },
 
     render: function () {
+        this.fetchButton.addClickListener(this.handleOnClickFetch.bind(this));
+        this.airdropListView.addItem(this.fetchButton);
+
         this.airdrops.forEach(airdrop => {
-            var avt = new ColorAvatar(sha256(airdrop.email));
+            var avt = new ColorAvatar(sha256(airdrop.url));
             var joinButton = new Button("JOIN");
-            var urlText = new Text(airdrop.email);
+            var urlText = new Text(airdrop.url);
 
             avt.addClass("flex-basic-0 flex-grow-1 cursor-pointer");
             urlText.addClass("flex-basic-0 flex-grow-3 margin-0 break-word width-100");
@@ -164,18 +186,17 @@ var airdropView = {
             var item = new HorizontalList([avt, urlText, joinButton]);
             item.addClass("uk-card uk-card-default uk-card-hover uk-card-body uk-padding-small margin-10");
 
-            joinButton.addClickListener(this.handleOnClickJoin.bind(this));
+            joinButton.addClickListener(this.handleOnClickJoin(airdrop.url));
 
             this.airdropListView.addItem(item);
         });
 
-        this.fetchButton.addClickListener(this.handleOnClickFetch);
-        this.airdropListView.addItem(this.fetchButton);
-
         this.airdropListView.render(airdropApp);
     },
+    empty: function () {
+        this.airdropListView.empty();
+    }
 }
-
 
 octopus.updateShowView();
 octopus.updateAirdropView();
