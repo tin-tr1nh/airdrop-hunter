@@ -16,6 +16,18 @@ class Widget {
       this.elem.appendTo(where);
     }
   }
+
+  hide() {
+    this.elem.hide();
+  }
+
+  remove() {
+    this.elem.remove();
+  }
+
+  empty() {
+    this.elem.empty();
+  }
 }
 
 export default Widget;

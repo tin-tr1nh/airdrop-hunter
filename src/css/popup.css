@@ -5,6 +5,7 @@
 body {
   width: 346px;
   height: 600px;
+  margin: auto;
 }
 
 .border-radius-18 {
@@ -39,6 +40,10 @@ body {
 
 .margin-10 {
   margin: 10px;
+}
+
+.margin-2 {
+  margin: 2px;
 }
 
 .break-word {

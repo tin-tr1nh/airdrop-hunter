@@ -20,6 +20,11 @@ class VerticalList extends Widget {
       item.render(this.elem);
     });
   }
+
+  empty() {
+    super.empty();
+    this.items = [];
+  }
 }
 
 export default VerticalList;
