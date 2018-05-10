@@ -99,8 +99,12 @@ var editView = {
         this.account = account;
         this.elem = $("<div></div>");
         this.inputs = {};
-        this.saveButton = $('<button class="uk-button uk-button-default"></button>').text("Save");
+        this.saveButton = $('<button class="uk-button uk-button-default margin-2"></button>').text("Save");
         this.saveButton.click(this.handleClickSaveButton.bind(this));
+
+        this.cancelButton = $('<button class="uk-button uk-button-default margin-2"></button>').text("Cancel");
+        this.cancelButton.click(this.handleClickCancelButton.bind(this));
+
         this.render();
     },
 
@@ -114,6 +118,11 @@ var editView = {
             octopus.updateShowView();
         });
         this.elem.remove();
+    },
+
+    handleClickCancelButton: function () {
+        this.elem.remove();
+        octopus.updateShowView();
     },
 
     render: function () {
@@ -131,7 +140,10 @@ var editView = {
                 item.appendTo(this.elem);
             }
         }
+
+        this.cancelButton.appendTo(this.elem);
         this.saveButton.appendTo(this.elem);
+
         this.elem.appendTo(app);
     }
 };

@@ -13,7 +13,18 @@ var Model = {
     },
     addAccount: function (account) {
         return this.loadAccounts().then(function (res) {
-            res.push(account);
+            let add = true;
+
+            for (let index = 0; index < res.length; index++) {
+                if (res[index].email == account.email) {
+                    res[index] = account;
+                    add = false;
+                }
+            }
+
+            if (add) {
+                res.push(account);
+            }
 
             chrome.storage.local.set({
                 accounts: res
