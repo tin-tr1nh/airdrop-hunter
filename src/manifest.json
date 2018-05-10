@@ -1,5 +1,6 @@
 {
-  "name": "Chrome Extension Webpack",
+  "name": "airdropHunter",
+  "description": "automation-fast-easy way extension for airdrop",
   "options_page": "options.html",
   "background": {
     "page": "background.html"
