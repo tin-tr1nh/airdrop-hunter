@@ -1,4 +1,4 @@
-# airhunt-frontend
+# airdrop-hunter
 Help you to control all of your information that is used for airdrop. 
 And help use to automatically fill in any airdrop. 
 
