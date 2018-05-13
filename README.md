@@ -1,10 +1,17 @@
 # airdrop-hunter
-Help you to control all of your information that is used for airdrop. 
-And help use to automatically fill in any airdrop. 
+Help you to control all of your messy information that is used for airdrop. 
+And help you to automatically fill it in any airdrop form quickly. 
 
-## Idea
-We will input new information (css selector of airdrop form) of the new airdrops.
-After that our extension is going to fetch those information and you can use it to join the Airdrop instantly.
+## How it work
+The admin from your community will do the airdrop first.
+They will capture new information (css selector of airdrop form) of the new airdrops.
+And put them into a google sheet file. 
+
+All the member in your community can join and finish airdrop process by one click.
+The automatic function only work with the url from google sheet. 
+So you could use it to make funding for your community.
+
+## Usage
 
 ### Options page
 <div style="text-align:center">
@@ -19,3 +26,8 @@ In option page, you can add new information, and fetch new airdrop information
 </div>
 Access any airdrop website from Options page. And you can instantly-fill-in all form by one click for each account.
 
+## TODO 
+
+- Import, export account info to CSV file
+- Add dynamically community link
+- Refactor code
